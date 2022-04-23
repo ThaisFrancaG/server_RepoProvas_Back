@@ -28,3 +28,56 @@ model Sessions {
 
   @@map("sessions")
 }
+
+model Categories {
+  id Int @id @default(autoincrement())
+  name String @unique
+
+  @@map("categories")
+  
+  Tests  Tests[]
+}
+
+model Terms {
+  id Int @id @default(autoincrement())
+  number String @unique
+
+  @@map("terms")
+  Disciplines Disciplines[]
+}
+
+model Disciplines {
+  id Int @id @default(autoincrement())
+  name String @unique
+  term Terms @relation(fields: [termId], references: [id])
+  termId Int
+
+  @@map("disciplines")
+  TeachersDisciplines TeachersDisciplines[]
+}
+model Teachers{
+   id Int @id @default(autoincrement())
+  name String @unique
+  @@map ("teacher")
+  TeachersDisciplines TeachersDisciplines[]
+}
+
+model TeachersDisciplines{
+   id Int @id @default(autoincrement())
+  teacher Teachers @relation(fields: [teacherId], references: [id])
+  teacherId Int 
+   discipline Disciplines @relation(fields: [disciplineId], references: [id])
+  disciplineId Int 
+@@map("teachersDisciplines")
+  Tests  Tests[]
+}
+
+model Tests{
+   id Int @id @default(autoincrement())
+name String
+pdfUrl String
+category Categories @relation(fields: [categoryId], references: [id])
+categoryId Int 
+teacherDiscipline TeachersDisciplines @relation(fields: [teacherDisciplineId], references: [id])
+teacherDisciplineId Int 
+}
