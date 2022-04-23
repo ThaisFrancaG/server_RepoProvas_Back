@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import pg from "pg";
 import pkg from "@prisma/client";
 
 dotenv.config();

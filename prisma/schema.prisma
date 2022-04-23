@@ -1,10 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-model Users {
+model users {
   id Int @id @default(autoincrement())
-  email Int @unique 
-  password Int 
+  email String @unique 
+  password String
 }
 generator client {
   provider = "prisma-client-js"
