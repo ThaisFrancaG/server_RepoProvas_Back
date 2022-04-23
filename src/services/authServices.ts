@@ -46,7 +46,17 @@ async function checkPassword(userInfo: UserInfo, password: string) {
     throw { code: "401", message: "Check info" };
   }
 }
+
+async function checkSession(userInfo: UserInfo) {
+  //tá meio solução de fita crepe
+  const session = await userRepo.findSession(userInfo.id);
+  console.log(session);
+  if (session) {
+    await userRepo.deleteSession(session.id);
+  }
+}
 async function newSession(userInfo: UserInfo) {
+  await checkSession(userInfo);
   const passKey = process.env.JWT_SECRET;
   const token = jwt.sign(userInfo.email, passKey);
   await userRepo.newSession(userInfo.id, token);

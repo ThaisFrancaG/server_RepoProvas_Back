@@ -26,4 +26,18 @@ async function newSession(userId: number, token: string) {
   });
 }
 
-export { findByEmail, newUser, newSession };
+async function findSession(userId: number) {
+  const results = await prisma.sessions.findFirst({
+    where: { userId },
+  });
+  return results;
+}
+
+async function deleteSession(sessionId: number) {
+  const results = await prisma.sessions.delete({
+    where: { id: sessionId },
+  });
+  return results;
+}
+
+export { findByEmail, newUser, findSession, deleteSession, newSession };

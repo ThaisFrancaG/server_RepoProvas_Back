@@ -12,6 +12,7 @@ async function signUp(req: Request, res: Response) {
 }
 
 async function signIn(req: Request, res: Response) {
+  console.log("chegou pro login");
   const { email, password } = req.body;
 
   const token = await auth.signIn(email, password);
