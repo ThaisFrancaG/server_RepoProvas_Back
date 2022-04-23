@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 export default function validateSchema(schema) {
+  console.log("chegou pra validar o schema");
   return (req: Request, res: Response, next: NextFunction) => {
     const validation = schema.validate(req.body);
     if (validation.error) {
