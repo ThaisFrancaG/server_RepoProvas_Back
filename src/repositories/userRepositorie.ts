@@ -17,4 +17,13 @@ async function newUser(email: string, password: string) {
   });
 }
 
-export { findByEmail, newUser };
+async function newSession(userId: number, token: string) {
+  await prisma.sessions.create({
+    data: {
+      userId: userId,
+      token: token,
+    },
+  });
+}
+
+export { findByEmail, newUser, newSession };

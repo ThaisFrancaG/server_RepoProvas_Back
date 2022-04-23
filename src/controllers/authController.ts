@@ -11,4 +11,14 @@ async function signUp(req: Request, res: Response) {
   res.status(201).send("Sign-up sucess");
 }
 
-export { signUp };
+async function signIn(req: Request, res: Response) {
+  const { email, password } = req.body;
+
+  const token = await auth.signIn(email, password);
+
+  console.log(token);
+
+  res.status(200).send(token);
+}
+
+export { signUp, signIn };
