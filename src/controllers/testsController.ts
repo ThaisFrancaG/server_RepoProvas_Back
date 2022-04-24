@@ -3,7 +3,6 @@ import * as services from "../services/testsServices.js";
 
 async function getTestsList(req: Request, res: Response) {
   const { id } = req.params;
-  console.log(req.path);
 
   if (!id || parseInt(id) !== parseInt(id)) {
     throw { code: "400", message: "Something went wrong" };

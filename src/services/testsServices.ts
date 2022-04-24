@@ -1,8 +1,6 @@
 import * as testsRepo from "../repositories/testsRepositorie.js";
 
 async function getTestsDiscipline(id: number) {
-  console.log("chegou no services");
-
   const testsList = await testsRepo.getTestByDiscipline(id);
 
   console.log(testsList.length);
@@ -10,9 +8,7 @@ async function getTestsDiscipline(id: number) {
 }
 
 async function getTestsTeacher(id: number) {
-  console.log("chegou no services");
-
-  const testsList = await testsRepo.getTestByDiscipline(id);
+  const testsList = await testsRepo.getTestByTeacher(id);
 
   console.log(testsList.length);
   return testsList;
