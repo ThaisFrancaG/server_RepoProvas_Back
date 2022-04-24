@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { prisma } from "../../database.js";
 import * as auth from "../services/authServices.js";
 
 async function signUp(req: Request, res: Response) {
@@ -12,14 +11,15 @@ async function signUp(req: Request, res: Response) {
 }
 
 async function signIn(req: Request, res: Response) {
-  console.log("chegou pro login");
   const { email, password } = req.body;
-
   const token = await auth.signIn(email, password);
-
-  console.log(token);
 
   res.status(200).send(token);
 }
 
-export { signUp, signIn };
+async function logOut(req: Request, res: Response) {
+  const { token } = req.body;
+  await auth.logOut(token);
+  res.status(200).send(token);
+}
+export { signUp, signIn, logOut };

@@ -33,6 +33,12 @@ async function findSession(userId: number) {
   return results;
 }
 
+async function checkSession(token: string) {
+  const results = await prisma.sessions.findFirst({
+    where: { token },
+  });
+  return results;
+}
 async function deleteSession(sessionId: number) {
   const results = await prisma.sessions.delete({
     where: { id: sessionId },
@@ -40,4 +46,11 @@ async function deleteSession(sessionId: number) {
   return results;
 }
 
-export { findByEmail, newUser, findSession, deleteSession, newSession };
+export {
+  findByEmail,
+  newUser,
+  findSession,
+  checkSession,
+  deleteSession,
+  newSession,
+};
