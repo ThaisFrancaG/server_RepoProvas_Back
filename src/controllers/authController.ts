@@ -17,4 +17,9 @@ async function signIn(req: Request, res: Response) {
   res.status(200).send(token);
 }
 
-export { signUp, signIn };
+async function logOut(req: Request, res: Response) {
+  const { token } = req.body;
+  await auth.logOut(token);
+  res.status(200).send(token);
+}
+export { signUp, signIn, logOut };
