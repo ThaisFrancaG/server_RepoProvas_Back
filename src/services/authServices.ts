@@ -25,7 +25,7 @@ async function signIn(email: string, password: string) {
   }
   await checkPassword(userInfo[0], password);
   const token = await newSession(userInfo[0]);
-  console.log(token);
+
   return token;
 }
 
@@ -50,7 +50,7 @@ async function checkPassword(userInfo: UserInfo, password: string) {
 async function checkSession(userInfo: UserInfo) {
   //tá meio solução de fita crepe
   const session = await userRepo.findSession(userInfo.id);
-  console.log(session);
+
   if (session) {
     await userRepo.deleteSession(session.id);
   }
