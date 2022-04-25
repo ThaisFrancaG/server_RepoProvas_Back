@@ -1,31 +1,40 @@
 import { prisma } from "../../database.js";
 
-async function getTestByDiscipline(disciplineId: number) {
-  console.log("chegou no repo");
+async function getDisciplines() {
+  const results = await prisma.disciplines.findMany();
 
+  return results;
+}
+
+async function getTeachers() {
+  const results = await prisma.teachers.findMany();
+
+  return results;
+}
+async function getTestByDiscipline(disciplineId: number) {
   const results = await prisma.tests.findMany({
     where: {
       teacherDiscipline: {
         disciplineId: disciplineId,
       },
     },
+    include: { teacherDiscipline: { include: { teacher: true } } },
   });
 
   return results;
 }
 
 async function getTestByTeacher(teacherId: number) {
-  console.log("chegou no repo teacher");
-
   const results = await prisma.tests.findMany({
     where: {
       teacherDiscipline: {
         teacherId: teacherId,
       },
     },
+    include: { teacherDiscipline: { include: { discipline: true } } },
   });
 
   return results;
 }
 
-export { getTestByDiscipline, getTestByTeacher };
+export { getTestByDiscipline, getTestByTeacher, getDisciplines, getTeachers };

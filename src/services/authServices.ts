@@ -25,7 +25,7 @@ async function signIn(email: string, password: string) {
   }
   await checkPassword(userInfo[0], password);
   const token = await newSession(userInfo[0]);
-  console.log(token);
+
   return token;
 }
 

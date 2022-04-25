@@ -23,4 +23,22 @@ async function getTestsList(req: Request, res: Response) {
   res.sendStatus(400);
 }
 
-export { getTestsList };
+async function getFilterList(req: Request, res: Response) {
+  console.log("chegou na conroler de filtro");
+  const pathFilter = req.path.split("/")[1];
+  console.log(pathFilter);
+  if (pathFilter === "disciplines") {
+    const filterList = await services.getDisciplines();
+    return res.status(200).send(filterList);
+  }
+
+  if (pathFilter === "teachers") {
+    const filterList = await services.getTeachers();
+    return res.status(200).send(filterList);
+  }
+  console.log(pathFilter);
+
+  res.sendStatus(400);
+}
+
+export { getTestsList, getFilterList };
