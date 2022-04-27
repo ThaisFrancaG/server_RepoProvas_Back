@@ -29,6 +29,9 @@ async function signIn(email: string, password: string) {
   return token;
 }
 
+async function logOut(token: string) {
+  await deleteSession(token);
+}
 async function getEmailInfo(email: string) {
   const emailInfo = await userRepo.findByEmail(email);
   return emailInfo;
@@ -47,13 +50,22 @@ async function checkPassword(userInfo: UserInfo, password: string) {
   }
 }
 
+async function deleteSession(token: string) {
+  const sessionInfo = await userRepo.checkSession(token);
+  if (!sessionInfo) {
+    throw {
+      code: "400",
+      message: "Something went wrong, please try again later",
+    };
+  }
+  await userRepo.deleteSession(sessionInfo.id);
+}
 async function checkSession(userInfo: UserInfo) {
-  //tá meio solução de fita crepe
   const session = await userRepo.findSession(userInfo.id);
-
   if (session) {
     await userRepo.deleteSession(session.id);
   }
+  return session;
 }
 async function newSession(userInfo: UserInfo) {
   await checkSession(userInfo);
@@ -63,4 +75,4 @@ async function newSession(userInfo: UserInfo) {
   return token;
 }
 
-export { signUp, signIn };
+export { signUp, signIn, logOut };
