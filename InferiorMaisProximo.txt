@@ -1,0 +1,48 @@
+function lowerbound(list, target) {
+  
+  let left = 0;
+  let rigth = list.length - 1;
+  if (list.length === 0) { return -1 }
+  
+  let finalIndex = 0;
+
+  while (rigth >= left) {
+
+    let middle = Math.floor((left + rigth) / 2)
+
+    let leftDifference = Math.abs(list[middle-1] - target)
+    let middleDifference = Math.abs(list[middle] - target)
+    let rigthDifference = Math.abs(list[middle+1] - target)
+
+    if(leftDifference===0){return list[middle-1]}
+    else if(middleDifference===0){return list[middle]}
+    else if(rigthDifference===0){return list[middle+1]}
+
+    if(middleDifference<leftDifference && middleDifference<rigthDifference){
+      return list[middle]
+    }
+    
+    if(leftDifference===middleDifference){
+      rigth = middle-1 
+      finalIndex=left }
+    
+    if(rigthDifference===middleDifference){
+    left = middle + 1
+    finalIndex=middle }
+    
+  if (rigthDifference < middleDifference) {
+    left = middle + 1
+    finalIndex = left}
+    
+ if(leftDifference < middleDifference) {
+    rigth = middle -1 
+    finalIndex = rigth } }
+             
+  if(list[finalIndex]>target){return -1}
+  return list[finalIndex]  
+}
+
+let list =  [0,5,6,7,8,10,20,35,50]
+let target =  0;
+
+console.log(lowerbound(list, target))
