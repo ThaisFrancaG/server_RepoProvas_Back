@@ -24,9 +24,8 @@ async function getTestsList(req: Request, res: Response) {
 }
 
 async function getFilterList(req: Request, res: Response) {
-  console.log("chegou na conroler de filtro");
   const pathFilter = req.path.split("/")[1];
-  console.log(pathFilter);
+
   if (pathFilter === "disciplines") {
     const filterList = await services.getDisciplines();
     return res.status(200).send(filterList);
@@ -36,7 +35,6 @@ async function getFilterList(req: Request, res: Response) {
     const filterList = await services.getTeachers();
     return res.status(200).send(filterList);
   }
-  console.log(pathFilter);
 
   res.sendStatus(400);
 }
