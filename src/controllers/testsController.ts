@@ -23,26 +23,26 @@ async function getTestsList(req: Request, res: Response) {
   res.sendStatus(400);
 }
 
-async function getFilterList(req: Request, res: Response) {
-  const pathFilter = req.path.split("/")[1];
-
-  if (pathFilter === "disciplines") {
-    const filterList = await services.getDisciplines();
-    return res.status(200).send(filterList);
-  }
-
-  if (pathFilter === "teachers") {
-    const filterList = await services.getTeachers();
-    return res.status(200).send(filterList);
-  }
+async function getTeachers(req: Request, res: Response) {
+  const teachers = await services.getTeachers();
+  console.log(teachers);
+  res.send({ teachers });
 
   res.sendStatus(400);
+}
+
+async function getDisciplinesByTerms(req: Request, res: Response) {
+  const { termId } = req.params;
+  console.log(termId);
+  const disciplinesList = await services.getDisciplinesByTerm(parseInt(termId));
+
+  res.send(disciplinesList);
 }
 
 async function getTerms(req: Request, res: Response) {
   const terms = await services.getTerms();
   console.log(terms);
-  res.send({ terms });
+  res.send(terms);
 }
 
 async function getCategories(req: Request, res: Response) {
@@ -50,4 +50,10 @@ async function getCategories(req: Request, res: Response) {
   const categories = await services.getCategoriesByTerm(choosenTerm);
   res.send({ categories });
 }
-export { getTestsList, getFilterList, getCategories, getTerms };
+export {
+  getTestsList,
+  getCategories,
+  getTerms,
+  getTeachers,
+  getDisciplinesByTerms,
+};

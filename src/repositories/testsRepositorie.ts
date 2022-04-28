@@ -39,6 +39,14 @@ async function getTestByTeacher(teacherId: number) {
 async function getTerms() {
   return prisma.terms.findMany();
 }
+
+async function getDisciplinesByTerm(id: number) {
+  const results = await prisma.disciplines.findMany({
+    where: { termId: id },
+  });
+
+  return results;
+}
 async function findMany() {
   return prisma.categories.findMany();
 }
@@ -50,4 +58,5 @@ export {
   getTeachers,
   findMany,
   getTerms,
+  getDisciplinesByTerm,
 };

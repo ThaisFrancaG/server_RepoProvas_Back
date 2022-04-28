@@ -4,9 +4,11 @@ import * as get from "../controllers/testsController.js";
 
 const filterRouter = Router();
 
-filterRouter.get("/disciplines", validateUserToken, get.getFilterList);
-filterRouter.get("/teachers", validateUserToken, get.getFilterList);
-filterRouter.get("/terms", validateUserToken, get.getTerms);
-filterRouter.get("/categories", validateUserToken, get.getCategories);
-
+filterRouter.get("/disciplines", validateUserToken, get.getTerms);
+filterRouter.get("/teachers", validateUserToken, get.getTeachers);
+filterRouter.get(
+  "/:termId/disciplines",
+  validateUserToken,
+  get.getDisciplinesByTerms
+);
 export default filterRouter;
