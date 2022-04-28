@@ -39,4 +39,15 @@ async function getFilterList(req: Request, res: Response) {
   res.sendStatus(400);
 }
 
-export { getTestsList, getFilterList };
+async function getTerms(req: Request, res: Response) {
+  const terms = await services.getTerms();
+  console.log(terms);
+  res.send({ terms });
+}
+
+async function getCategories(req: Request, res: Response) {
+  const choosenTerm = 1;
+  const categories = await services.getCategoriesByTerm(choosenTerm);
+  res.send({ categories });
+}
+export { getTestsList, getFilterList, getCategories, getTerms };
