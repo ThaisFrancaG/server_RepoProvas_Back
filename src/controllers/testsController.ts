@@ -39,4 +39,8 @@ async function getFilterList(req: Request, res: Response) {
   res.sendStatus(400);
 }
 
-export { getTestsList, getFilterList };
+async function getCategories(req: Request, res: Response) {
+  const categories = await services.getDisciplines();
+  res.send({ categories });
+}
+export { getTestsList, getFilterList, getCategories };

@@ -33,8 +33,17 @@ async function getTestByTeacher(teacherId: number) {
     },
     include: { teacherDiscipline: { include: { discipline: true } } },
   });
-
   return results;
 }
 
-export { getTestByDiscipline, getTestByTeacher, getDisciplines, getTeachers };
+async function findMany() {
+  return prisma.categories.findMany();
+}
+
+export {
+  getTestByDiscipline,
+  getTestByTeacher,
+  getDisciplines,
+  getTeachers,
+  findMany,
+};

@@ -1,0 +1,34 @@
+1. intslar jester e as demais dependencias
+
+2. adicionar os config
+
+3. incializar o codigo e ver se vai o npm run dev
+
+4. adicionar pasta e arquivo de teste
+
+5. instalar supertests para poder usar uma porta aleatoria
+
+
+segunda parte - testes com banco
+
+1. criar um novo database_url pro prisma achar, dentro de um novo .env -> .env.test
+3. instalar npm i dotenv para manutenção de ambientes diferentes
+4. avisar no package.json que tem um .en diferente pros testes
+2. rodar o prisma migrate pra ele encontrar o database e criar um banco novo ->npx dotenv -e .env.test prisma migrate dev
+
+
+
+
+fiz assim sakuma:
+"scripts": {
+    "dev": "npx nodemon src/server.ts",
+    "test": "dotenv -e .env.test prisma db seed && NODE_OPTIONS=--experimental-vm-modules jest -i",
+    "migrate_test_db": "npx dotenv -e .env.test prisma migrate dev"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+
+
+
+npm i -D supertest @types/supertest jest ts-jest typescript @types/jest
