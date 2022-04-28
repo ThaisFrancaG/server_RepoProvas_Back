@@ -23,5 +23,23 @@ async function getDisciplines() {
 
   return disciplinesList;
 }
+async function getTerms() {
+  const getTermsList = await testsRepo.getTerms();
 
-export { getTestsDiscipline, getTestsTeacher, getTeachers, getDisciplines };
+  return getTermsList;
+}
+
+async function getCategoriesByTerm(choosenTerm: number) {
+  const disciplinesList = await testsRepo.getDisciplines();
+
+  return disciplinesList;
+}
+
+export {
+  getTestsDiscipline,
+  getTestsTeacher,
+  getTeachers,
+  getDisciplines,
+  getCategoriesByTerm,
+  getTerms,
+};

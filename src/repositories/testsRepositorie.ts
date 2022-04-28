@@ -36,6 +36,9 @@ async function getTestByTeacher(teacherId: number) {
   return results;
 }
 
+async function getTerms() {
+  return prisma.terms.findMany();
+}
 async function findMany() {
   return prisma.categories.findMany();
 }
@@ -46,4 +49,5 @@ export {
   getDisciplines,
   getTeachers,
   findMany,
+  getTerms,
 };
