@@ -11,25 +11,31 @@ async function getTeachers() {
 
   return results;
 }
-async function getTestByDiscipline(disciplineId: number) {
+async function getTestByDiscipline(disciplineId: number, categorieId: number) {
+  console.log("chegou");
+
   const results = await prisma.tests.findMany({
     where: {
       teacherDiscipline: {
         disciplineId: disciplineId,
       },
+      category: { id: categorieId },
     },
+
     include: { teacherDiscipline: { include: { teacher: true } } },
   });
 
+  console.log(results);
   return results;
 }
 
-async function getTestByTeacher(teacherId: number) {
+async function getTestByTeacher(teacherId: number, categorieId: number) {
   const results = await prisma.tests.findMany({
     where: {
       teacherDiscipline: {
         teacherId: teacherId,
       },
+      category: { id: categorieId },
     },
     include: { teacherDiscipline: { include: { discipline: true } } },
   });

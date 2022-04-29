@@ -6,6 +6,8 @@ const filterRouter = Router();
 
 filterRouter.get("/disciplines", validateUserToken, get.getTerms);
 filterRouter.get("/teachers", validateUserToken, get.getTeachers);
+filterRouter.get("/categories", validateUserToken, get.getCategories);
+
 filterRouter.get(
   "/:termId/disciplines",
   validateUserToken,
