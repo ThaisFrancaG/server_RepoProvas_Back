@@ -1,17 +1,24 @@
 import Router from "express";
 import validateUserToken from "../middlewares/checkAuth.js";
-import { getTestsList } from "../controllers/testsController.js";
+import {
+  getTestsList,
+  getTestsFiltered,
+} from "../controllers/testsController.js";
 const testRouter = Router();
 
 testRouter.get(
-  "/tests/discipline/:id/:categorieId",
+  "/tests/disciplines/:id/:categorieId",
   validateUserToken,
   getTestsList
 );
 testRouter.get(
-  "/tests/teacher/:id/:categorieId",
+  "/tests/teachers/:id/:categorieId",
   validateUserToken,
   getTestsList
 );
+
+testRouter.get("/tests/teachers/:id", validateUserToken, getTestsFiltered);
+
+testRouter.get("/tests/disciplines/:id", validateUserToken, getTestsFiltered);
 
 export default testRouter;

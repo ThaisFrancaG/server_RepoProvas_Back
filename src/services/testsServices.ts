@@ -1,7 +1,6 @@
 import * as testsRepo from "../repositories/testsRepositorie.js";
 
 async function getTestsDiscipline(disciplineId: number, categorieId: number) {
-  console.log("categorieId" + categorieId);
   const testsList = await testsRepo.getTestByDiscipline(
     disciplineId,
     categorieId
@@ -10,6 +9,18 @@ async function getTestsDiscipline(disciplineId: number, categorieId: number) {
   return testsList;
 }
 
+async function getTestsOneDiscipline(disciplineId: number) {
+  const testsList = await testsRepo.getTestOneDiscipline(disciplineId);
+
+  return testsList;
+}
+async function getTestsOneTeacher(teacherId: number) {
+  ("chegou service teacher");
+
+  const testsList = await testsRepo.getTestOneTeacher(teacherId);
+
+  return testsList;
+}
 async function getTestsTeacher(id: number, categorieId: number) {
   const testsList = await testsRepo.getTestByTeacher(id, categorieId);
 
@@ -53,4 +64,6 @@ export {
   getDisciplinesByTerm,
   getCategories,
   getTerms,
+  getTestsOneDiscipline,
+  getTestsOneTeacher,
 };

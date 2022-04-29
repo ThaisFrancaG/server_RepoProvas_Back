@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import * as auth from "../services/authServices.js";
 
 async function signUp(req: Request, res: Response) {
-  console.log("chamou aqui hein");
   const { email, password, passwordCheck } = req.body;
   if (password !== passwordCheck) {
     throw { code: "409", message: "Password check must be equal to password" };
@@ -12,11 +11,8 @@ async function signUp(req: Request, res: Response) {
 }
 
 async function signIn(req: Request, res: Response) {
-  console.log("chamou aqui hein login");
-
   const { email, password } = req.body;
-  console.log(email);
-  console.log(password);
+
   const token = await auth.signIn(email, password);
 
   res.status(200).send(token);

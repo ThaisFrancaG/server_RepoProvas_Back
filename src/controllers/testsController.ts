@@ -3,7 +3,7 @@ import * as services from "../services/testsServices.js";
 
 async function getTestsList(req: Request, res: Response) {
   const { id, categorieId } = req.params;
-  console.log("categorieId" + categorieId);
+
   if (!id || parseInt(id) !== parseInt(id)) {
     throw { code: "400", message: "Something went wrong" };
   }
@@ -23,29 +23,45 @@ async function getTestsList(req: Request, res: Response) {
       parseInt(id),
       parseInt(categorieId)
     );
-    console.log(testsList);
+
     return res.status(200).send(testsList);
   }
 
   res.sendStatus(400);
 }
 
+async function getTestsFiltered(req: Request, res: Response) {
+  const { id } = req.params;
+  if (!id || parseInt(id) !== parseInt(id)) {
+    throw { code: "400", message: "Something went wrong" };
+  }
+  const pathFilter = req.path.split("/")[2];
+
+  if (pathFilter === "disciplines") {
+    const testsList = await services.getTestsOneDiscipline(parseInt(id));
+    return res.status(200).send(testsList);
+  }
+
+  if (pathFilter === "teachers") {
+    const testsList = await services.getTestsOneTeacher(parseInt(id));
+    return res.status(200).send(testsList);
+  }
+}
+
 async function getTeachers(req: Request, res: Response) {
   const teachers = await services.getTeachers();
-  console.log(teachers);
+
   res.send(teachers);
 }
 
 async function getCategories(req: Request, res: Response) {
   const categories = await services.getCategories();
-  console.log(categories);
-
   res.send(categories);
 }
 
 async function getDisciplinesByTerms(req: Request, res: Response) {
   const { termId } = req.params;
-  console.log(termId);
+
   const categoriesList = await services.getCategories();
   const disciplinesList = await services.getDisciplinesByTerm(parseInt(termId));
 
@@ -54,7 +70,7 @@ async function getDisciplinesByTerms(req: Request, res: Response) {
 
 async function getTerms(req: Request, res: Response) {
   const terms = await services.getTerms();
-  console.log(terms);
+
   res.send(terms);
 }
 
@@ -70,4 +86,5 @@ export {
   getDisciplinesByTerms,
   getCategories,
   getDisciplines,
+  getTestsFiltered,
 };

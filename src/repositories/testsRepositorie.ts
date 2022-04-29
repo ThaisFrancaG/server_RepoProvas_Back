@@ -12,8 +12,6 @@ async function getTeachers() {
   return results;
 }
 async function getTestByDiscipline(disciplineId: number, categorieId: number) {
-  console.log("chegou");
-
   const results = await prisma.tests.findMany({
     where: {
       teacherDiscipline: {
@@ -25,10 +23,21 @@ async function getTestByDiscipline(disciplineId: number, categorieId: number) {
     include: { teacherDiscipline: { include: { teacher: true } } },
   });
 
-  console.log(results);
   return results;
 }
 
+async function getTestOneDiscipline(disciplineId: number) {
+  const results = await prisma.tests.findMany({
+    where: {
+      teacherDiscipline: {
+        disciplineId: disciplineId,
+      },
+    },
+    include: { teacherDiscipline: { include: { teacher: true } } },
+  });
+
+  return results;
+}
 async function getTestByTeacher(teacherId: number, categorieId: number) {
   const results = await prisma.tests.findMany({
     where: {
@@ -36,6 +45,18 @@ async function getTestByTeacher(teacherId: number, categorieId: number) {
         teacherId: teacherId,
       },
       category: { id: categorieId },
+    },
+    include: { teacherDiscipline: { include: { discipline: true } } },
+  });
+  return results;
+}
+
+async function getTestOneTeacher(teacherId: number) {
+  const results = await prisma.tests.findMany({
+    where: {
+      teacherDiscipline: {
+        teacherId: teacherId,
+      },
     },
     include: { teacherDiscipline: { include: { discipline: true } } },
   });
@@ -65,4 +86,6 @@ export {
   findMany,
   getTerms,
   getDisciplinesByTerm,
+  getTestOneDiscipline,
+  getTestOneTeacher,
 };
