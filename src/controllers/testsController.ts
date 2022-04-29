@@ -58,10 +58,16 @@ async function getTerms(req: Request, res: Response) {
   res.send(terms);
 }
 
+async function getDisciplines(req: Request, res: Response) {
+  const disciplinesList = await services.getDisciplines();
+  res.send(disciplinesList);
+}
+
 export {
   getTestsList,
   getTerms,
   getTeachers,
   getDisciplinesByTerms,
   getCategories,
+  getDisciplines,
 };
