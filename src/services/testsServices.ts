@@ -1,13 +1,17 @@
 import * as testsRepo from "../repositories/testsRepositorie.js";
 
-async function getTestsDiscipline(id: number) {
-  const testsList = await testsRepo.getTestByDiscipline(id);
+async function getTestsDiscipline(disciplineId: number, categorieId: number) {
+  console.log("categorieId" + categorieId);
+  const testsList = await testsRepo.getTestByDiscipline(
+    disciplineId,
+    categorieId
+  );
 
   return testsList;
 }
 
-async function getTestsTeacher(id: number) {
-  const testsList = await testsRepo.getTestByTeacher(id);
+async function getTestsTeacher(id: number, categorieId: number) {
+  const testsList = await testsRepo.getTestByTeacher(id, categorieId);
 
   return testsList;
 }
@@ -23,16 +27,22 @@ async function getDisciplines() {
 
   return disciplinesList;
 }
+
+async function getDisciplinesByTerm(termId: number) {
+  const disciplinesList = await testsRepo.getDisciplinesByTerm(termId);
+  const categories = await testsRepo.findMany();
+
+  return { categories, disciplinesList };
+}
 async function getTerms() {
   const getTermsList = await testsRepo.getTerms();
 
   return getTermsList;
 }
 
-async function getCategoriesByTerm(choosenTerm: number) {
-  const disciplinesList = await testsRepo.getDisciplines();
-
-  return disciplinesList;
+async function getCategories() {
+  const categoriesList = await testsRepo.findMany();
+  return categoriesList;
 }
 
 export {
@@ -40,6 +50,7 @@ export {
   getTestsTeacher,
   getTeachers,
   getDisciplines,
-  getCategoriesByTerm,
+  getDisciplinesByTerm,
+  getCategories,
   getTerms,
 };
