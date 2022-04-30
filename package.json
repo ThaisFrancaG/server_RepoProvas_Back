@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i",
-    "dev": "npx nodemon src/server.ts"
+    "dev": "npx nodemon src/server.ts",
+    "migrate": "npx prisma migrate dev",
+    "prismaUpdate": "prisma migrate dev --create-only"
   },
   "keywords": [],
   "author": "",
