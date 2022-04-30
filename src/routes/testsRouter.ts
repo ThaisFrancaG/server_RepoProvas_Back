@@ -7,12 +7,12 @@ import {
 const testRouter = Router();
 
 testRouter.get(
-  "/tests/disciplines/:id/:categorieId",
+  "/tests/discipline/:id/:categorieId",
   validateUserToken,
   getTestsList
 );
 testRouter.get(
-  "/tests/teachers/:id/:categorieId",
+  "/tests/teacher/:id/:categorieId",
   validateUserToken,
   getTestsList
 );

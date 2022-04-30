@@ -10,6 +10,8 @@ async function getTestsDiscipline(disciplineId: number, categorieId: number) {
 }
 
 async function getTestsOneDiscipline(disciplineId: number) {
+  ("chegou service discipline");
+
   const testsList = await testsRepo.getTestOneDiscipline(disciplineId);
 
   return testsList;

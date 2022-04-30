@@ -32,6 +32,7 @@ async function getTestsList(req: Request, res: Response) {
 
 async function getTestsFiltered(req: Request, res: Response) {
   const { id } = req.params;
+
   if (!id || parseInt(id) !== parseInt(id)) {
     throw { code: "400", message: "Something went wrong" };
   }
@@ -39,11 +40,13 @@ async function getTestsFiltered(req: Request, res: Response) {
 
   if (pathFilter === "disciplines") {
     const testsList = await services.getTestsOneDiscipline(parseInt(id));
+
     return res.status(200).send(testsList);
   }
 
   if (pathFilter === "teachers") {
     const testsList = await services.getTestsOneTeacher(parseInt(id));
+
     return res.status(200).send(testsList);
   }
 }

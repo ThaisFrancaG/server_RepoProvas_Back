@@ -60,6 +60,7 @@ async function getTestOneTeacher(teacherId: number) {
     },
     include: { teacherDiscipline: { include: { discipline: true } } },
   });
+
   return results;
 }
 
