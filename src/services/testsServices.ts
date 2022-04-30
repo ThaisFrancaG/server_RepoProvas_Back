@@ -3,7 +3,7 @@ import * as testsInteractions from "../repositories/testsInteractionsRepositorie
 import * as checks from "../repositories/checksRepositorie.js";
 async function addTestView(testId: number) {
   const checkTestId = await checks.checkTestById(testId);
-  console.log(checkTestId);
+
   if (checkTestId.length === 0) {
     throw { code: "404", message: "Test not Found" };
   }
