@@ -73,8 +73,9 @@ model TeachersDisciplines {
 model Tests {
   id                  Int                 @id @default(autoincrement())
   name                String
+  views Int @default(0)
   pdfUrl              String
-  categoryId          Int
+  categoryId          Int 
   teacherDisciplineId Int
   category            Categories          @relation(fields: [categoryId], references: [id])
   teacherDiscipline   TeachersDisciplines @relation(fields: [teacherDisciplineId], references: [id])

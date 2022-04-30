@@ -1,5 +1,14 @@
 import * as testsRepo from "../repositories/testsRepositorie.js";
+import * as testsInteractions from "../repositories/testsInteractionsRepositorie.js";
+import * as checks from "../repositories/checksRepositorie.js";
+async function addTestView(testId: number) {
+  const checkTestId = await checks.checkTestById(testId);
 
+  if (checkTestId.length === 0) {
+    throw { code: "404", message: "Test not Found" };
+  }
+  await testsInteractions.addTestView(testId);
+}
 async function getTestsDiscipline(disciplineId: number, categorieId: number) {
   const testsList = await testsRepo.getTestByDiscipline(
     disciplineId,
@@ -68,4 +77,5 @@ export {
   getTerms,
   getTestsOneDiscipline,
   getTestsOneTeacher,
+  addTestView,
 };

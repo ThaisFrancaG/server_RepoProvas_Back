@@ -1,6 +1,28 @@
 import { Request, Response } from "express";
 import * as services from "../services/testsServices.js";
 
+async function getTerms(req: Request, res: Response) {
+  const terms = await services.getTerms();
+
+  res.send(terms);
+}
+
+async function getDisciplines(req: Request, res: Response) {
+  const disciplinesList = await services.getDisciplines();
+  res.send(disciplinesList);
+}
+
+async function getCategories(req: Request, res: Response) {
+  const categories = await services.getCategories();
+  res.send(categories);
+}
+
+async function getTeachers(req: Request, res: Response) {
+  const teachers = await services.getTeachers();
+
+  res.send(teachers);
+}
+
 async function getTestsList(req: Request, res: Response) {
   const { id, categorieId } = req.params;
 
@@ -51,17 +73,6 @@ async function getTestsFiltered(req: Request, res: Response) {
   }
 }
 
-async function getTeachers(req: Request, res: Response) {
-  const teachers = await services.getTeachers();
-
-  res.send(teachers);
-}
-
-async function getCategories(req: Request, res: Response) {
-  const categories = await services.getCategories();
-  res.send(categories);
-}
-
 async function getDisciplinesByTerms(req: Request, res: Response) {
   const { termId } = req.params;
 
@@ -69,17 +80,6 @@ async function getDisciplinesByTerms(req: Request, res: Response) {
   const disciplinesList = await services.getDisciplinesByTerm(parseInt(termId));
 
   res.send({ disciplinesList, categoriesList });
-}
-
-async function getTerms(req: Request, res: Response) {
-  const terms = await services.getTerms();
-
-  res.send(terms);
-}
-
-async function getDisciplines(req: Request, res: Response) {
-  const disciplinesList = await services.getDisciplines();
-  res.send(disciplinesList);
 }
 
 export {
