@@ -8,7 +8,9 @@ filterRouter.get("/search/disciplines", validateUserToken, get.getDisciplines);
 filterRouter.get("/search/teachers", validateUserToken, get.getTeachers);
 
 filterRouter.get("/disciplines", validateUserToken, get.getTerms);
-filterRouter.get("/teachers", validateUserToken, get.getTeachers);
+filterRouter.get("/teachers", get.getTeachers);
+// filterRouter.get("/teachers", validateUserToken, get.getTeachers);
+
 filterRouter.get("/categories", validateUserToken, get.getCategories);
 
 filterRouter.get(

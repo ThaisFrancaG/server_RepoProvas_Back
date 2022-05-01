@@ -4,7 +4,11 @@ import supertest from "supertest";
 
 describe("POST /sign-up", () => {
   beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE sessions CASCADE;`;
     await prisma.$executeRaw`TRUNCATE TABLE users CASCADE;`;
+  });
+  afterAll(async () => {
+    await prisma.$disconnect();
   });
 
   it("dados os dados de usuário para cadastro, e supondo que esses dados estejam corretos, deve retornar status 201", async () => {
@@ -65,4 +69,19 @@ describe("POST /sign-up", () => {
   });
 });
 
+describe("GET/teachers", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE sessions CASCADE;`;
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE;`;
+  });
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
+  it("Conferir se o seeding foi direitinho", async () => {
+    const teacherList = await supertest(app).get("/teachers");
+    console.log(teacherList.body);
+    expect(teacherList.status).toBe(200);
+  });
+});
 // describe("POST /sign-in");

@@ -5,10 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i",
+    "test": "dotenv -e .env.test prisma db seed && NODE_OPTIONS=--experimental-vm-modules jest -i",
     "dev": "npx nodemon src/server.ts",
     "migrate": "npx prisma migrate dev",
-    "prismaUpdate": "prisma migrate dev --create-only"
+    "prismaUpdate": "prisma migrate dev --create-only",
+    "migrateTest": "dotenv -e .env.test -- npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
