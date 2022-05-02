@@ -5,7 +5,7 @@ import filterRouter from "./filtersRoutes.js";
 const router = Router();
 
 router.use(authRouter);
-router.use(testRouter);
+router.use("/tests", testRouter);
 router.use(filterRouter);
 
 export default router;
