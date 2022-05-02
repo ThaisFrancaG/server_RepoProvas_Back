@@ -14,7 +14,7 @@ async function signIn(req: Request, res: Response) {
   const { email, password } = req.body;
 
   const token = await auth.signIn(email, password);
-
+  console.log(token);
   res.status(200).send(token);
 }
 
