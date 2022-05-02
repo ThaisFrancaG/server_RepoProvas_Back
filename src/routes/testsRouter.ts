@@ -6,32 +6,24 @@ import * as testsUpdate from "../controllers/updateTestsController.js";
 const testRouter = Router();
 
 testRouter.get(
-  "/tests/discipline/:id/:categorieId",
+  "/discipline/:id/:categorieId",
   validateUserToken,
   testsGet.getTestsList
 );
 testRouter.get(
-  "/tests/teacher/:id/:categorieId",
+  "/teacher/:id/:categorieId",
   validateUserToken,
   testsGet.getTestsList
 );
 
+testRouter.get("/teachers/:id", validateUserToken, testsGet.getTestsFiltered);
+
 testRouter.get(
-  "/tests/teachers/:id",
+  "/disciplines/:id",
   validateUserToken,
   testsGet.getTestsFiltered
 );
 
-testRouter.get(
-  "/tests/disciplines/:id",
-  validateUserToken,
-  testsGet.getTestsFiltered
-);
-
-testRouter.patch(
-  "/tests/views/:testId",
-  validateUserToken,
-  testsUpdate.updateTest
-);
+testRouter.patch("/views/:testId", validateUserToken, testsUpdate.updateTest);
 
 export default testRouter;
