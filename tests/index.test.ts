@@ -70,8 +70,15 @@ describe("POST /sign-up", () => {
     expect(invalidFormat.status).toEqual(422);
   });
 });
-
-//theoretically, if the tests are made on the right order, there should already be a valid user to use.
+const bodySignIn = {
+  email: "thaisteste@gmail.com",
+  password: "123456",
+};
+const bodySignUp = {
+  email: "thaisteste@gmail.com",
+  password: "123456",
+  passwordCheck: "123456",
+};
 describe("POST /sign-in", () => {
   beforeAll(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE sessions CASCADE;`;
@@ -80,16 +87,6 @@ describe("POST /sign-in", () => {
   afterAll(async () => {
     await prisma.$disconnect();
   });
-  const bodySignUp = {
-    email: "thaisteste@gmail.com",
-    password: "123456",
-    passwordCheck: "123456",
-  };
-  const bodySignIn = {
-    email: "thaisteste@gmail.com",
-    password: "123456",
-  };
-
   const bodyWrongFormatOne = {};
   const bodyWrongFormatTwo = {
     emails: "thaisteste@gmail.com",
@@ -137,5 +134,45 @@ describe("POST /sign-in", () => {
 
     expect(badEmailSignIn.status).toBe(404);
     expect(badPasswordSignIn.status).toBe(401);
+  });
+});
+
+async function signInUp() {
+  await supertest(app).post("/sign-up").send(bodySignUp);
+  const login = await supertest(app).post("/sign-in").send(bodySignIn);
+
+  return login.text;
+}
+
+describe("POST /tests/views/:testId", () => {
+  beforeAll(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE sessions CASCADE;`;
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE;`;
+    //it will sign in and loging. I will try to do it with an outside function to prevent repetition
+  });
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
+  it("Will go the test view route to simulate that a test PDF has been accessed and will check if the view count had gone up correctly", async () => {
+    const token = await signInUp();
+
+    const previousViews = await prisma.tests.findMany({
+      where: { id: 1 },
+    });
+    await supertest(app).patch("/tests/views/1").set("Authorization", token);
+    const currentViews = await prisma.tests.findMany({
+      where: { id: 1 },
+    });
+    expect(currentViews[0].views).toBeGreaterThan(previousViews[0].views);
+  });
+  it("Will go the test view route with wrong informations to check if the error messages are adequated", async () => {
+    const token = await signInUp();
+
+    const views = await supertest(app)
+      .patch("/tests/views/100")
+      .set("Authorization", token);
+
+    expect(views.status).toBe(404);
   });
 });

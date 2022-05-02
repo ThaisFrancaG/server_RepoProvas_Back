@@ -19,7 +19,6 @@ async function getCategories(req: Request, res: Response) {
 
 async function getTeachers(req: Request, res: Response) {
   const teachers = await services.getTeachers();
-  console.log(teachers);
   if (teachers.length === 0) {
     return res.sendStatus(400);
   }
