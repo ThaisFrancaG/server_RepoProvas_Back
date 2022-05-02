@@ -1,28 +1,15 @@
 import { Request, Response } from "express";
 import * as services from "../services/testsServices.js";
-
+import * as filters from "../services/filtersServices.js";
 async function getTerms(req: Request, res: Response) {
   const terms = await services.getTerms();
 
   res.send(terms);
 }
 
-async function getDisciplines(req: Request, res: Response) {
-  const disciplinesList = await services.getDisciplines();
-  res.send(disciplinesList);
-}
-
 async function getCategories(req: Request, res: Response) {
   const categories = await services.getCategories();
   res.send(categories);
-}
-
-async function getTeachers(req: Request, res: Response) {
-  const teachers = await services.getTeachers();
-  if (teachers.length === 0) {
-    return res.sendStatus(400);
-  }
-  res.status(200).send(teachers);
 }
 
 async function getTestsList(req: Request, res: Response) {
@@ -55,24 +42,25 @@ async function getTestsList(req: Request, res: Response) {
 }
 
 async function getTestsFiltered(req: Request, res: Response) {
-  const { id } = req.params;
+  console.log("chegou no filtered testing");
+  const { filter, filterId } = req.params;
 
-  if (!id || parseInt(id) !== parseInt(id)) {
+  if (!filterId || parseInt(filterId) !== parseInt(filterId)) {
     throw { code: "400", message: "Something went wrong" };
   }
-  const pathFilter = req.path.split("/")[2];
 
-  if (pathFilter === "disciplines") {
-    const testsList = await services.getTestsOneDiscipline(parseInt(id));
+  if (filter === "disciplines") {
+    const testsListD = await services.getTestsOneDiscipline(parseInt(filterId));
 
-    return res.status(200).send(testsList);
+    return res.status(200).send(testsListD);
   }
 
-  if (pathFilter === "teachers") {
-    const testsList = await services.getTestsOneTeacher(parseInt(id));
-
-    return res.status(200).send(testsList);
+  if (filter === "teachers") {
+    const testsListT = await services.getTestsOneTeacher(parseInt(filterId));
+    return res.status(200).send(testsListT);
   }
+
+  res.sendStatus(400);
 }
 
 async function getDisciplinesByTerms(req: Request, res: Response) {
@@ -83,13 +71,27 @@ async function getDisciplinesByTerms(req: Request, res: Response) {
 
   res.send({ disciplinesList, categoriesList });
 }
+async function getFilter(req: Request, res: Response) {
+  const { filter } = req.params;
+  console.log("filter is" + filter);
+
+  if (filter === "disciplines") {
+    const list = await filters.getDisciplines(filter.toString());
+    return res.status(200).send(list);
+  }
+  if (filter === "teachers") {
+    const list = await filters.getTeachers(filter.toString());
+    return res.status(200).send(list);
+  }
+
+  res.status(400);
+}
 
 export {
   getTestsList,
   getTerms,
-  getTeachers,
   getDisciplinesByTerms,
   getCategories,
-  getDisciplines,
   getTestsFiltered,
+  getFilter,
 };

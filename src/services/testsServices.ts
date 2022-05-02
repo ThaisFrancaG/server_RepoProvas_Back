@@ -38,18 +38,6 @@ async function getTestsTeacher(id: number, categorieId: number) {
   return testsList;
 }
 
-async function getTeachers() {
-  const teachersList = await testsRepo.getTeachers();
-
-  return teachersList;
-}
-
-async function getDisciplines() {
-  const disciplinesList = await testsRepo.getDisciplines();
-
-  return disciplinesList;
-}
-
 async function getDisciplinesByTerm(termId: number) {
   const disciplinesList = await testsRepo.getDisciplinesByTerm(termId);
   const categories = await testsRepo.findMany();
@@ -70,8 +58,6 @@ async function getCategories() {
 export {
   getTestsDiscipline,
   getTestsTeacher,
-  getTeachers,
-  getDisciplines,
   getDisciplinesByTerm,
   getCategories,
   getTerms,

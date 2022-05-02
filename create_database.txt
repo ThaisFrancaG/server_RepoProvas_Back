@@ -1,6 +1,6 @@
-INSERT INTO categories (name) values ('adm publica');
-INSERT INTO categories (name) values ('direito adm');
-INSERT INTO categories (name) values ('direito constitucional');
+INSERT INTO categories (name) values ('P1');
+INSERT INTO categories (name) values ('P2');
+INSERT INTO categories (name) values ('P3');
 
 
 INSERT INTO terms (number) values ('1');
@@ -9,9 +9,12 @@ INSERT INTO terms (number) values ('3');
 INSERT INTO terms (number) values ('4');
 
 
-INSERT INTO disciplines (name,"termId") values ('teste1','1');
-INSERT INTO disciplines (name,"termId") values ('teste2','2');
-INSERT INTO disciplines (name,"termId") values ('teste3','2');
+INSERT INTO disciplines (name,"termId") values ('DIREITO CONSTITUCINAL','1');
+INSERT INTO disciplines (name,"termId") values ('DIREITO CONSTITUCIONAL','2');
+INSERT INTO disciplines (name,"termId") values ('DIREITO ADMINISTRATIVO','2');
+INSERT INTO disciplines (name,"termId") values ('DIREITO TRABALHISTA','3');
+INSERT INTO disciplines (name,"termId") values ('DIREITO PENAL','3');
+INSERT INTO disciplines (name,"termId") values ('LEGISLAÇÃO EXTRAVAGANTE','3');
 
 
 INSERT INTO teachers (name) values ('Ana');
@@ -23,14 +26,17 @@ INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('1','1');
 INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('1','2');
 INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('2','1');
 INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('3','1');
-INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('3','3');
+INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('4','3');
+INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('4','4');
+INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('1','4');
+INSERT INTO "teachersDisciplines" ("teacherId","disciplineId") values ('2','3');
 
 
-INSERT INTO tests (name,"pdfUrl","categoryId", "teacherDisciplineId") values ('prova1','pdf',1,1);
-INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('prova2','pdf',1,1);
-INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('prova1','pdf',2,1);
-INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('prova3','pdf',1,3);
-INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('prova4','pdf',2,1);
+INSERT INTO tests (name,"pdfUrl","categoryId", "teacherDisciplineId") values ('PROVA 1','https://www.nintendo.co.jp/clv/manuals/en/pdf/CLV-P-NAANE.pdf',1,1);
+INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('SIMULADO CESPE','https://perso.crans.org/besson/publis/LaTeX-article-with-Pokemon-numbering.git/test.pdf',1,1);
+INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('SIMULADO FGV','https://pt.scribd.com/document/311071908/Pokedex-Completa',2,1);
+INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('CESPE 2022','https://www.parco.co.jp/pdf/en/store/storage/pokemon_cafe_pr_20160518.pdf',1,3);
+INSERT INTO tests (name,"pdfUrl","categoryId","teacherDisciplineId") values ('CESPE/CEBRASPE','https://play.nintendo.com/documents/Pokemon_Cafe_Mix_diorama.pdf',2,1);
 
 
 

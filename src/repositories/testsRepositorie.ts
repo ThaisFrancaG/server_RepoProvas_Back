@@ -1,16 +1,5 @@
 import { prisma } from "../../database.js";
 
-async function getDisciplines() {
-  const results = await prisma.disciplines.findMany();
-
-  return results;
-}
-
-async function getTeachers() {
-  const results = await prisma.teachers.findMany();
-
-  return results;
-}
 async function getTestByDiscipline(disciplineId: number, categorieId: number) {
   const results = await prisma.tests.findMany({
     where: {
@@ -79,14 +68,27 @@ async function findMany() {
   return prisma.categories.findMany();
 }
 
+async function findFilters(tableName: string) {
+  const list = [];
+  switch (tableName) {
+    case "disciplines":
+      list.push(await prisma.disciplines.findMany());
+      break;
+    case "teachers":
+      list.push(await prisma.teachers.findMany());
+      break;
+  }
+
+  return list[0];
+}
+
 export {
   getTestByDiscipline,
   getTestByTeacher,
-  getDisciplines,
-  getTeachers,
   findMany,
   getTerms,
   getDisciplinesByTerm,
   getTestOneDiscipline,
   getTestOneTeacher,
+  findFilters,
 };

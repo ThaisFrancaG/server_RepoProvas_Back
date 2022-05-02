@@ -16,10 +16,8 @@ testRouter.get(
   testsGet.getTestsList
 );
 
-testRouter.get("/teachers/:id", validateUserToken, testsGet.getTestsFiltered);
-
 testRouter.get(
-  "/disciplines/:id",
+  "/:filter/:filterId",
   validateUserToken,
   testsGet.getTestsFiltered
 );
