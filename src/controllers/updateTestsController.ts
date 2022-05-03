@@ -9,4 +9,12 @@ async function updateTest(req: Request, res: Response) {
   res.sendStatus(200);
 }
 
-export { updateTest };
+async function newTest(req: Request, res: Response) {
+  const testInfo = req.body;
+
+  await services.newTest(testInfo);
+
+  res.sendStatus(200);
+}
+
+export { updateTest, newTest };

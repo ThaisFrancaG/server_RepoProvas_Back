@@ -64,6 +64,14 @@ async function getDisciplinesByTerm(id: number) {
 
   return results;
 }
+
+async function getTermsByDiscipline(id: number) {
+  const results = await prisma.disciplines.findFirst({
+    where: { id: id },
+  });
+
+  return results;
+}
 async function findMany() {
   return prisma.categories.findMany();
 }
@@ -82,6 +90,24 @@ async function findFilters(tableName: string) {
   return list[0];
 }
 
+interface NewTest {
+  name: string;
+  pdfUrl: string;
+  categoryId: number;
+  teacherDisciplineId: number;
+}
+async function createNewTest(testInfo: NewTest) {
+  const { name, pdfUrl, categoryId, teacherDisciplineId } = testInfo;
+
+  await prisma.tests.create({
+    data: {
+      name: name,
+      pdfUrl: pdfUrl,
+      categoryId: categoryId,
+      teacherDisciplineId: teacherDisciplineId,
+    },
+  });
+}
 export {
   getTestByDiscipline,
   getTestByTeacher,
@@ -91,4 +117,6 @@ export {
   getTestOneDiscipline,
   getTestOneTeacher,
   findFilters,
+  getTermsByDiscipline,
+  createNewTest,
 };
