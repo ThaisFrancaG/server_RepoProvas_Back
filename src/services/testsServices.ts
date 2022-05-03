@@ -1,6 +1,14 @@
 import * as testsRepo from "../repositories/testsRepositorie.js";
 import * as testsInteractions from "../repositories/testsInteractionsRepositorie.js";
 import * as checks from "../repositories/checksRepositorie.js";
+
+interface TestInfo {
+  name: string;
+  pdfUrl: string;
+  categoryId: number;
+  teacherId: number;
+  disciplineId: number;
+}
 async function addTestView(testId: number) {
   const checkTestId = await checks.checkTestById(testId);
 
@@ -8,6 +16,47 @@ async function addTestView(testId: number) {
     throw { code: "404", message: "Test not Found" };
   }
   await testsInteractions.addTestView(testId);
+}
+
+async function newTest(testInfo: TestInfo) {
+  const checkTest = await checks.checkDuplicatedTest(
+    testInfo.name,
+    testInfo.pdfUrl
+  );
+
+  if (checkTest) {
+    throw {
+      code: "409",
+      message:
+        "Seems like this test has already been uploaded! If your think otherwise, or can´t find the test, please contact us",
+    };
+  }
+  const checkTeacherDiscipline = await checks.checkTeacherDiscipline(
+    testInfo.disciplineId,
+    testInfo.teacherId
+  );
+  if (!checkTeacherDiscipline) {
+    throw {
+      code: "409",
+      message:
+        "Seems like this teacher does not teached this discpline. Check your Info",
+    };
+  }
+  const categoryId = await checks.checkCategory(testInfo.categoryId);
+
+  if (!categoryId) {
+    throw {
+      code: "401",
+      message: "This is not a valid category",
+    };
+  }
+  const newTest = {
+    name: testInfo.name,
+    pdfUrl: testInfo.pdfUrl,
+    categoryId: testInfo.categoryId,
+    teacherDisciplineId: checkTeacherDiscipline.id,
+  };
+  await testsRepo.createNewTest(newTest);
 }
 async function getTestsDiscipline(disciplineId: number, categorieId: number) {
   const testsList = await testsRepo.getTestByDiscipline(
@@ -45,7 +94,6 @@ async function getTerms() {
 
   return getTermsList;
 }
-
 async function getCategories() {
   const categoriesList = await testsRepo.findMany();
   return categoriesList;
@@ -60,4 +108,5 @@ export {
   getTestsOneDiscipline,
   getTestsOneTeacher,
   addTestView,
+  newTest,
 };

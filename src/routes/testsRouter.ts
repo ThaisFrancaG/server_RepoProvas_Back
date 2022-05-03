@@ -19,6 +19,11 @@ testRouter.get(
 
 testRouter.patch("/views/:testId", validateUserToken, testsUpdate.updateTest);
 
-testRouter.post("/tests/add", validateUserToken, validateSchema(newTestSchema));
+testRouter.post(
+  "/tests/add",
+  validateUserToken,
+  validateSchema(newTestSchema),
+  testsUpdate.newTest
+);
 
 export default testRouter;
