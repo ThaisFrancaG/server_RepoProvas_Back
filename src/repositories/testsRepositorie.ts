@@ -98,10 +98,6 @@ interface NewTest {
 }
 async function createNewTest(testInfo: NewTest) {
   const { name, pdfUrl, categoryId, teacherDisciplineId } = testInfo;
-  console.log(name);
-  console.log(pdfUrl);
-  console.log(categoryId);
-  console.log(teacherDisciplineId);
 
   await prisma.tests.create({
     data: {
