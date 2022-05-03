@@ -19,15 +19,11 @@ async function getTestsDiscipline(disciplineId: number, categorieId: number) {
 }
 
 async function getTestsOneDiscipline(disciplineId: number) {
-  ("chegou service discipline");
-
   const testsList = await testsRepo.getTestOneDiscipline(disciplineId);
 
   return testsList;
 }
 async function getTestsOneTeacher(teacherId: number) {
-  ("chegou service teacher");
-
   const testsList = await testsRepo.getTestOneTeacher(teacherId);
 
   return testsList;

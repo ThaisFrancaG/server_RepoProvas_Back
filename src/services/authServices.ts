@@ -11,22 +11,36 @@ interface UserInfo {
 }
 
 async function signUp(email: string, password: string) {
-  const checkEmail = await getEmailInfo(email);
-  if (checkEmail.length > 0) {
-    throw { code: "409", message: "Email already in use" };
+  try {
+    const checkEmail = await getEmailInfo(email);
+    if (checkEmail.length > 0) {
+      throw { code: "409", message: "Email already in use" };
+    }
+    await newUser(email, password);
+  } catch (error) {
+    throw {
+      code: "444",
+      message: "Something went wrong, please try again later",
+    };
   }
-  await newUser(email, password);
 }
 
 async function signIn(email: string, password: string) {
-  const userInfo = await getEmailInfo(email);
-  if (userInfo.length === 0) {
-    throw { code: "404", message: "Please, sign-up to login" };
-  }
-  await checkPassword(userInfo[0], password);
-  const token = await newSession(userInfo[0]);
+  try {
+    const userInfo = await getEmailInfo(email);
+    if (userInfo.length === 0) {
+      throw { code: "404", message: "Please, sign-up to login" };
+    }
+    await checkPassword(userInfo[0], password);
+    const token = await newSession(userInfo[0]);
 
-  return token;
+    return token;
+  } catch (error) {
+    throw {
+      code: "444",
+      message: "Something went wrong, please try again later",
+    };
+  }
 }
 
 async function logOut(token: string) {

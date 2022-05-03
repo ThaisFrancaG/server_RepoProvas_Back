@@ -6,18 +6,13 @@ import * as testsUpdate from "../controllers/updateTestsController.js";
 const testRouter = Router();
 
 testRouter.get(
-  "/discipline/:id/:categorieId",
+  "/categories/:filter/:filterId/:categoryId",
   validateUserToken,
-  testsGet.getTestsList
-);
-testRouter.get(
-  "/teacher/:id/:categorieId",
-  validateUserToken,
-  testsGet.getTestsList
+  testsGet.getTestsFilteredCategory
 );
 
 testRouter.get(
-  "/:filter/:filterId",
+  "/tests/:filter/:filterId",
   validateUserToken,
   testsGet.getTestsFiltered
 );

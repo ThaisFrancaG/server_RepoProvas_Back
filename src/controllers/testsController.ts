@@ -12,37 +12,7 @@ async function getCategories(req: Request, res: Response) {
   res.send(categories);
 }
 
-async function getTestsList(req: Request, res: Response) {
-  const { id, categorieId } = req.params;
-
-  if (!id || parseInt(id) !== parseInt(id)) {
-    throw { code: "400", message: "Something went wrong" };
-  }
-
-  const pathFilter = req.path.split("/")[2];
-
-  if (pathFilter === "discipline") {
-    const testsList = await services.getTestsDiscipline(
-      parseInt(id),
-      parseInt(categorieId)
-    );
-    return res.status(200).send(testsList);
-  }
-
-  if (pathFilter === "teacher") {
-    const testsList = await services.getTestsTeacher(
-      parseInt(id),
-      parseInt(categorieId)
-    );
-
-    return res.status(200).send(testsList);
-  }
-
-  res.sendStatus(400);
-}
-
 async function getTestsFiltered(req: Request, res: Response) {
-  console.log("chegou no filtered testing");
   const { filter, filterId } = req.params;
 
   if (!filterId || parseInt(filterId) !== parseInt(filterId)) {
@@ -63,6 +33,33 @@ async function getTestsFiltered(req: Request, res: Response) {
   res.sendStatus(400);
 }
 
+async function getTestsFilteredCategory(req: Request, res: Response) {
+  const { filter, filterId, categoryId } = req.params;
+
+  if (!filterId || parseInt(filterId) !== parseInt(filterId)) {
+    throw { code: "400", message: "Something went wrong" };
+  }
+
+  if (filter === "discipline") {
+    const testsListD = await services.getTestsDiscipline(
+      parseInt(filterId),
+      parseInt(categoryId)
+    );
+
+    return res.status(200).send(testsListD);
+  }
+
+  if (filter === "teacher") {
+    const testsListT = await services.getTestsTeacher(
+      parseInt(filterId),
+      parseInt(categoryId)
+    );
+    return res.status(200).send(testsListT);
+  }
+
+  res.sendStatus(400);
+}
+
 async function getDisciplinesByTerms(req: Request, res: Response) {
   const { termId } = req.params;
 
@@ -73,7 +70,6 @@ async function getDisciplinesByTerms(req: Request, res: Response) {
 }
 async function getFilter(req: Request, res: Response) {
   const { filter } = req.params;
-  console.log("filter is" + filter);
 
   if (filter === "disciplines") {
     const list = await filters.getDisciplines(filter.toString());
@@ -88,10 +84,10 @@ async function getFilter(req: Request, res: Response) {
 }
 
 export {
-  getTestsList,
   getTerms,
   getDisciplinesByTerms,
   getCategories,
   getTestsFiltered,
+  getTestsFilteredCategory,
   getFilter,
 };
